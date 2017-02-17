@@ -13,6 +13,9 @@ setup(
     author="Shay Palachy",
     author_email="shaypal5@gmail.com",
     name='morejson',
+    description="morejson is a drop-in replacement for Python's json module "
+                "that handles additional built-in and standard library Python"
+                " types.",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     long_description=README,
