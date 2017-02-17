@@ -52,3 +52,8 @@ datetime module types
 * timedelta
 * timezone
 
+Credits
+=======
+Created by Shay Palachy.
+Inspired by a great Github gist by abhinav-upadhyay:
+https://gist.github.com/abhinav-upadhyay/5300137
