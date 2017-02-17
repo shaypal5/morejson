@@ -18,6 +18,8 @@ morejson
 Installation
 ============
 
+``morejson`` is tested on Python 3.5.
+
 Install ``morejson`` with:
 
 .. code-block:: bash
