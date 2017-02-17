@@ -55,7 +55,7 @@ datetime module types
 
 Credits
 =======
-Created by Shay Palachy.
+Created by Shay Palachy  (shay.palachy@gmail.com).
 
 Inspired by a great Github gist by abhinav-upadhyay:
 
