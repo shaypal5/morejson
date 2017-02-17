@@ -57,6 +57,4 @@ Credits
 =======
 Created by Shay Palachy  (shay.palachy@gmail.com).
 
-Inspired by a great Github gist by abhinav-upadhyay:
-
-https://gist.github.com/abhinav-upadhyay/5300137
+Inspired by a great Github gist by abhinav-upadhyay: https://gist.github.com/abhinav-upadhyay/5300137
