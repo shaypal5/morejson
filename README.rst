@@ -8,7 +8,7 @@ morejson
   import datetime
 
   json.dumps({'now': datetime.datetime.now()})
-  json.dumps({'set': set([1,2], 'complex': complex(32, -4)})
+  json.dumps({'set': set([1,2]), 'complex': complex(32, -4)})
 
 .. contents::
 
