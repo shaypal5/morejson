@@ -169,11 +169,16 @@ _DECODER_MAP = {
     _EncodedTypes.TIME: _time_decoder,
     _EncodedTypes.DATETIME: _datetime_decoder,
     _EncodedTypes.TIMEDELTA: _timedelta_decoder,
-    _EncodedTypes.TIMEZONE: _timezone_decoder,
     _EncodedTypes.SET: _set_decoder,
     _EncodedTypes.FROZENSET: _frozenset_decoder,
     _EncodedTypes.COMPLEX: _complex_decoder
 }
+
+try:
+    _ENCODER_MAP[datetime.timezone] = _timezone_encoder
+    _DECODER_MAP[_EncodedTypes.TIMEZONE] = _timezone_decoder
+except AttributeError:
+    pass  # we're on Python 2.x
 
 
 def _morejson_object_hook(dict_obj):

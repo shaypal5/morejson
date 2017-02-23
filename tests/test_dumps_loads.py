@@ -1,7 +1,8 @@
 """Testing the dumps and loads functionality."""
 
-from unittest import TestCase
+import unittest
 
+import sys
 import datetime
 import json
 
@@ -13,7 +14,7 @@ __copyright__ = "Shay Palachy"
 __license__ = "MIT"
 
 
-class TestDumps(TestCase):
+class TestDumps(unittest.TestCase):
     """Testing the dumps and loads functionality."""
 
     def test_regular_dumps(self):
@@ -88,6 +89,7 @@ class TestDumps(TestCase):
         }
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
+    @unittest.skipIf(sys.version_info < (3, 0), "not supported in Python2")
     def test_dumps_timezone(self):
         """Testing dumps and loads of timezone types."""
         dicti = {

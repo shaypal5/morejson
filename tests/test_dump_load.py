@@ -1,7 +1,8 @@
 """Testing the dump and load functionality."""
 
-from unittest import TestCase
+import unittest
 
+import sys
 import os
 import datetime
 import json
@@ -36,7 +37,7 @@ def _dismantle_test_dirs():
         pass  # mac is annoying
 
 
-class TestDump(TestCase):
+class TestDump(unittest.TestCase):
     """Testing the dump and load functionality."""
 
     def test_regular_dump(self):
@@ -146,6 +147,7 @@ class TestDump(TestCase):
         finally:
             _dismantle_test_dirs()
 
+    @unittest.skipIf(sys.version_info < (3, 0), "not supported in Python2")
     def test_dumps_timezone(self):
         """Testing dump and load of timeone types."""
         try:
@@ -230,4 +232,3 @@ class TestDump(TestCase):
                 self.assertEqual(dicti, morejson.load(fileobj))
         finally:
             _dismantle_test_dirs()
-
