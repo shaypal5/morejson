@@ -258,4 +258,4 @@ for _func in _FUNC_MAP:
     try:
         _func.__signature__ = inspect.signature(_FUNC_MAP[_func])
     except AttributeError:
-        pass  # we're on python 2.x
+        pass  # we're on python 2/3.3 or lower
