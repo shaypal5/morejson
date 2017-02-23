@@ -1,0 +1,26 @@
+codecov:
+    notify:
+        require_ci_to_pass: yes
+
+coverage:
+    precision: 2
+    round: down
+    range: "70...100"
+    ignore: Tests
+
+comment:
+    layout: "header, diff"
+    behavior: default
+    require_changes: false
+    branches: null
+    flags: null
+    paths: null
+
+fixes:
+    - "ui::src/main/java"
+    - "Library::src/main/java"
+
+ignore:
+    - "versioneer.py"
+    - "morejson/_version.py"
+    - "**/_version.py"

@@ -8,9 +8,13 @@ notifications:
   email:
     on_success: change
     on_failure: always
+# before_install:
+#   - pip install --user codecov
 install:
 - pip install .
 script: nosetests
+# after_success:
+#   - codecov
 deploy:
   provider: pypi
   user: shaypal5
@@ -22,3 +26,4 @@ deploy:
     tags: true
     repo: shaypal5/morejson
     condition: $TRAVIS_PYTHON_VERSION = "3.5"
+  skip_upload_docs: true
