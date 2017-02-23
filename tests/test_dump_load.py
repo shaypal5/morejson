@@ -31,7 +31,7 @@ def _dismantle_test_dirs():
         for filename in os.listdir(_TEST_FOLDER):
             file_path = os.path.join(_TEST_FOLDER, filename)
             os.remove(file_path)
-        os.remove(_TEST_FOLDER)
+        os.rmdir(_TEST_FOLDER)
     except PermissionError:
         pass  # mac is annoying
 
