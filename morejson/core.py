@@ -6,13 +6,19 @@ import json
 from json import (  # pylint: disable=W0611
     decoder,
     encoder,
-    JSONDecodeError,
     JSONDecoder,
     JSONEncoder,
     scanner,
     _default_decoder,
     _default_encoder
 )
+try:
+    from json import (  # pylint: disable=W0611
+        JSONDecodeError
+    )
+except ImportError:
+    pass # we're on Python 2/3.4 or below
+
 
 # partly based on a great git gist by abhinav-upadhyay:
 # https://gist.github.com/abhinav-upadhyay/5300137
@@ -246,4 +252,3 @@ _FUNC_MAP = {
 for _func in _FUNC_MAP:
     _func.__doc__ = _FUNC_MAP[_func].__doc__
     _func.__signature__ = inspect.signature(_FUNC_MAP[_func])
-
