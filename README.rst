@@ -24,7 +24,7 @@ morejson
 Installation
 ============
 
-``morejson`` is tested on Python 3.5.
+``morejson`` is tested on Python 2.7, 3.4, 3.5 and 3.6.
 
 Install ``morejson`` with:
 
@@ -40,22 +40,18 @@ Use
 
 You can use any argument of these methods, including ``default``, ``cls`` and ``object_hook``; ``morejson`` will wrap around any kind of custom behaviour you provide, giving it priority over ``morejson``'s encoding or decoding, and allowing you to use it with any custom JSON encoding/decoding code you have.
 
-
-Features
-=========
-
 Supported Types
----------------
+===============
 
 Built-in Types
-~~~~~~~~~~~~~~
+--------------
 
 * set
 * frozenset
 * complex
 
 datetime module types
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * date
 * time
@@ -63,12 +59,6 @@ datetime module types
 * timedelta
 * timezone
 
-Version Compatability
----------------------
-* Python 2.7
-* Python 3.4
-* Python 3.5
-* Python 3.6
 
 Credits
 =======
