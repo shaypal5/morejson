@@ -6,23 +6,19 @@ python:
 - '3.6'
 notifications:
   email:
-  - shaypal5@gmail.com
+    on_success: change
+    on_failure: always
 install:
 - pip install .
 script: nosetests
 deploy:
   provider: pypi
-  user: "shaypal5"
+  user: shaypal5
   password:
-    secure: "e+nuRBt+qmRuFXNI6TnbMEjbxSXAxSg4PtbUCpcy1PfcYrg4BwvLQ/XRuS6RF/EyB2cVmKdT+6FCpJt4aMtKSrSXqeXn5AWQP6ARe5WgepPffNqxndTprRGAJZCBKiuQM5wCV0yK+UYFvcfbi7BB+aXsOwuc8xSfPd5AwFpB+QV/ZrN04YR6Kk9tg/A/m2MJflQzmlyqXFt0JI3bIZqU9lEYUE0hXL4WV+PAcDPCjGHEV4xwzZDpVi9TPdcy0FeskS7LvklnHSigKU32jIAQ/o1yJatk9fJQD88E98OzKzNvscPfqnVXpC+xyVBoDSxeVwFDRsrTgBmvbtOWoit8BtM8HvF2/5EchSyCw/iyeAhx9k0FWdC7Fs1xiI/ihcPM/v8B4ANJPaWEZmk55dQfQ9NELCiGTXJaQg/mV+PQ9d1kiOqlrQm4dnLC96ModYAoQzBgRHvXxFvIwLdHZTJUPaZfDyal5cy2GyLPst+qNtDjxlbN4ao0oTCZtAb3IxIn/PeKlsnUVtrxf4vWQkONMhBO9XuqOK5ivN7RBqbH0iBCKRSJcK813gIWuv03fgr6LhPHd/isKU/2AZpijAhIM5e7/ynUz062/8Oz1PlGMzRO21cMxGakpb6FyZRoWDcUjd4N01UHxNJpUFF/7/hmZbZSncj6VDQsPXmCKQOI+9Q="
+    secure: RaTkue2YoXAkT/byvecFuOYdrJpHchCSMYnV4xqUFhQgT8qbyv7/EL+pm6sQ75Ni/JKAhSBdW8l4faKY9X1vW3yc5E2YHBf/81VJo1+JAbD9vGX0RLZbDzIsEVht+hL2Xxvab5Xh3fI7Pcr+cozKKMZxcOvEEwGo5DENM4CquGLeYyUxQOyhwSVjA+54bucFm+u+BA0QxUSHSyFy0cPKJVi8jNMSK/XAvs+Zk26o/MOU3udSj25FBtTkqPTBphaUNkt2EPGK1ZWkS9uhqs+hrETMWj6n6k49WblXvMDJiUtCIM+36Q+GBH/9UxCWuMOjL+uRFjVwwKQEcend9YMvp4+jRZ1HsLAWjMMhazxgkZ6M7bErHRxyabb7om+5IMptPdIo31gw8S1dKktGyuiSVYqs9X2mGA//SoItoDjIAUI81TQ3s2QLw5SfyEARfAdN+QS2aRaZHc0RPcLb10xNu7d7cy/4I88W+dptNqVABCP26Jlg4xsrRGMnONMSt/kWg1enXfgSXJcyrqqAaZzQUs/5QmVGtU4DBl3C8pUiHs6eGdpcqO3vpYoHveNT0WzoONkqZBvzBOjUWf8oMJzI3LcmCruUtktyd9cnlzM49pndnCyXPIKcpqPSGtR0FS3I/QhP7RBB+5xjP39SIuFsEW6ciakOs+AdMePl8tAq01o=
   distributions: sdist bdist_wheel
   on:
     all_branches: true
     tags: true
     repo: shaypal5/morejson
     condition: $TRAVIS_PYTHON_VERSION = "3.5"
-notifications:
-# Emails are sent to the committer's git-configured email address by default,
-  email:
-    on_success: change
-    on_failure: always
