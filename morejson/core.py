@@ -255,4 +255,7 @@ _FUNC_MAP = {
 
 for _func in _FUNC_MAP:
     _func.__doc__ = _FUNC_MAP[_func].__doc__
-    _func.__signature__ = inspect.signature(_FUNC_MAP[_func])
+    try:
+        _func.__signature__ = inspect.signature(_FUNC_MAP[_func])
+    except AttributeError:
+        pass  # we're on python 2.x

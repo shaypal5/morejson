@@ -1,5 +1,11 @@
 morejson
 #########
+
+
+.. image:: https://travis-ci.org/shaypal5/morejson.svg?branch=master
+   :alt: morejson build status on Travis CI
+   :target: https://travis-ci.org/shaypal5/morejson
+
 ``morejson`` is a drop-in replacement for Python's ``json`` module that handles additional built-in and standard library Python types.
 
 .. code-block:: python
