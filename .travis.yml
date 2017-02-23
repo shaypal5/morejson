@@ -12,10 +12,10 @@ install:
 script: nosetests --with-doctest
 deploy:
   provider: pypi
-  user: shaypal5
+  user: "shaypal5"
   password:
     secure: "e+nuRBt+qmRuFXNI6TnbMEjbxSXAxSg4PtbUCpcy1PfcYrg4BwvLQ/XRuS6RF/EyB2cVmKdT+6FCpJt4aMtKSrSXqeXn5AWQP6ARe5WgepPffNqxndTprRGAJZCBKiuQM5wCV0yK+UYFvcfbi7BB+aXsOwuc8xSfPd5AwFpB+QV/ZrN04YR6Kk9tg/A/m2MJflQzmlyqXFt0JI3bIZqU9lEYUE0hXL4WV+PAcDPCjGHEV4xwzZDpVi9TPdcy0FeskS7LvklnHSigKU32jIAQ/o1yJatk9fJQD88E98OzKzNvscPfqnVXpC+xyVBoDSxeVwFDRsrTgBmvbtOWoit8BtM8HvF2/5EchSyCw/iyeAhx9k0FWdC7Fs1xiI/ihcPM/v8B4ANJPaWEZmk55dQfQ9NELCiGTXJaQg/mV+PQ9d1kiOqlrQm4dnLC96ModYAoQzBgRHvXxFvIwLdHZTJUPaZfDyal5cy2GyLPst+qNtDjxlbN4ao0oTCZtAb3IxIn/PeKlsnUVtrxf4vWQkONMhBO9XuqOK5ivN7RBqbH0iBCKRSJcK813gIWuv03fgr6LhPHd/isKU/2AZpijAhIM5e7/ynUz062/8Oz1PlGMzRO21cMxGakpb6FyZRoWDcUjd4N01UHxNJpUFF/7/hmZbZSncj6VDQsPXmCKQOI+9Q="
+  distributions: sdist bdist_wheel
   on:
     tags: true
-    distributions: sdist bdist_wheel
     repo: shaypal5/morejson
