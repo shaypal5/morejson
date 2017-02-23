@@ -1,0 +1,21 @@
+language: python
+python:
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
+notifications:
+  email:
+  - shaypal5@gmail.com
+install:
+- pip install .
+script: nosetests --with-doctest
+# deploy:
+#   provider: pypi
+#   user: yoavram
+#   password:
+#     secure:
+#   on:
+#     tags: true
+#     distributions: sdist bdist_wheel
+#     repo: shaypal5/morejson
