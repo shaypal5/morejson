@@ -158,7 +158,6 @@ _ENCODER_MAP = {
     datetime.time: _time_encoder,
     datetime.datetime: _datetime_encoder,
     datetime.timedelta: _timedelta_encoder,
-    datetime.timezone: _timezone_encoder,
     set: _set_encoder,
     frozenset: _frozenset_encoder,
     complex: _complex_encoder
