@@ -14,7 +14,6 @@ from json import (  # pylint: disable=W0611
     _default_encoder
 )
 
-
 # partly based on a great git gist by abhinav-upadhyay:
 # https://gist.github.com/abhinav-upadhyay/5300137
 
