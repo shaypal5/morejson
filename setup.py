@@ -27,9 +27,11 @@ setup(
     url='https://github.com/shaypal5/morejson',
     packages=['morejson'],
     # packages=find_packages(),
-    install_requires=[],
+    install_require=[],
+    extras_require={
+        'test': ['nose', 'coverage', 'nose-timer']
+    },
     test_suite='nose.collector',
-    tests_require=['nose', 'coverage', 'nose-timer'],
     platforms=['any'],
     classifiers=[
         # Trove classifiers
