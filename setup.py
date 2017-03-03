@@ -29,7 +29,7 @@ setup(
     # packages=find_packages(),
     install_requires=[],
     test_suite='nose.collector',
-    tests_require=['nose', 'coverage'],
+    tests_require=['nose', 'coverage', 'nose-timer'],
     platforms=['any'],
     classifiers=[
         # Trove classifiers
