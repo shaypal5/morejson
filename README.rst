@@ -3,7 +3,7 @@ morejson
 
 |PyPI-Status| |PyPI-Versions| |Build-Status| |Codecov| |LICENCE|
 
-``morejson`` is a drop-in replacement for Python's ``json`` module that handles additional built-in and standard library Python types.
+``morejson`` is a drop-in replacement for Python's ``json`` that handles additional built-in Python types.
 
 .. code-block:: python
 
