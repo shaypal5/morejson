@@ -10,13 +10,17 @@ notifications:
   email:
     on_success: change
     on_failure: always
-# before_install:
+before_install:
+  # coverage submission packages
+  - pip install codecov
 #   - pip install --user codecov
 install:
 - pip install .
 script: nosetests
-# after_success:
-#   - codecov
+# submit coverage
+after_success:
+  # - coveralls
+  - codecov
 deploy:
   provider: pypi
   user: shaypal5

@@ -1,0 +1,8 @@
+[run]
+branch = True
+omit =
+    tests/*
+    morejson/_version.py
+    morejson/__init__.py
+[report]
+show_missing = True

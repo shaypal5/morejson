@@ -3,7 +3,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
+
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
 import versioneer
 
 README_RST = ''
@@ -24,7 +29,7 @@ setup(
     # packages=find_packages(),
     install_requires=[],
     test_suite='nose.collector',
-    tests_require=['nose'],
+    tests_require=['nose', 'coverage'],
     platforms=['any'],
     classifiers=[
         # Trove classifiers

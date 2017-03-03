@@ -1,10 +1,7 @@
 morejson
 #########
 
-
-.. image:: https://travis-ci.org/shaypal5/morejson.svg?branch=master
-   :alt: morejson build status on Travis CI
-   :target: https://travis-ci.org/shaypal5/morejson
+|PyPI-Status| |PyPI-Versions| |Build-Status| |LICENCE|
 
 ``morejson`` is a drop-in replacement for Python's ``json`` module that handles additional built-in and standard library Python types.
 
@@ -63,3 +60,16 @@ Credits
 Created by Shay Palachy  (shay.palachy@gmail.com).
 
 Inspired by a great Github gist by abhinav-upadhyay: https://gist.github.com/abhinav-upadhyay/5300137
+
+
+.. |PyPI-Status| image:: https://img.shields.io/pypi/v/morejson.svg
+  :target: https://pypi.python.org/pypi/morejson
+
+.. |PyPI-Versions| image:: https://img.shields.io/pypi/pyversions/morejson.svg
+   :target: https://pypi.python.org/pypi/morejson
+
+.. |Build-Status| image:: https://travis-ci.org/shaypal5/morejson.svg?branch=master
+  :target: https://travis-ci.org/shaypal5/morejson
+
+.. |LICENCE| image:: https://img.shields.io/pypi/l/morejson.svg
+  :target: https://pypi.python.org/pypi/morejson
