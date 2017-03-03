@@ -208,18 +208,9 @@ class TestDumps(unittest.TestCase):
             morejson.dumps(dicti, default=TestDumps._monkey_default_encoder),
             object_hook=TestDumps._monkey_object_hook))
 
-    @staticmethod
-    def _monkey_bad_encoder(obj): # pylint: disable=E0202
-        return {
-            "_custom_type_": "monkey",
-            "name": obj.name,
-            "bananas": obj.bananas
-        }
-
-    def test_bad_dump_monkey(self):
-        """Testing dumps of monkey types."""
-        johnny = TestDumps._Monkey("Johnny", 54)
-        dicti = {"my_pet": johnny}
+    def test_custom_default_backoff(self):
+        """Testing custom default backoff."""
+        dicti = {"now": datetime.datetime.now()}
         self.assertEqual(dicti, morejson.loads(
-            morejson.dumps(dicti, default=TestDumps._monkey_bad_encoder),
+            morejson.dumps(dicti, default=TestDumps._monkey_default_encoder),
             object_hook=TestDumps._monkey_object_hook))
