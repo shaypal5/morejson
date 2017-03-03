@@ -6,3 +6,7 @@ coverage:
       default:
         target: '80'
     project: false
+ignore:
+  - "tests"
+  - "**/_version.py"
+  - "**/__init__.py"
