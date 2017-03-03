@@ -129,9 +129,9 @@ class TestDump(unittest.TestCase):
         if sys.version_info.major < 3 or sys.version_info.minor < 6:
             return
         try:
-            dt = datetime.datetime(
-                year=2012, month=10, day=10, fold=0.3)
             _build_test_dirs()
+            dt = datetime.datetime(
+                year=2012, month=10, day=10, fold=1)
             dicti = {
                 'datetime': dt,
                 'array': [1, 2, 3],
