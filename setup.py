@@ -19,7 +19,7 @@ setup(
     name='morejson',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    description="Wraps Python json, supporting to more Python built-in types.",
+    description="Wraps Python json, supporting more Python built-in types.",
     long_description=README_RST,
     license='MIT',
     author="Shay Palachy",
