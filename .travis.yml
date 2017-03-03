@@ -15,7 +15,7 @@ before_install:
   - pip install codecov
 install:
 - python setup.py test
-script: nosetests --cover-erase --with-coverage --with-timer --cover-package=morejson -d
+script: nosetests --cover-erase --with-coverage --cover-package=morejson -d
 # --ignore-files="tests_perf\.py" -coveralls
 # submit coverage
 after_success:
