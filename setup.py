@@ -27,10 +27,8 @@ setup(
     url='https://github.com/shaypal5/morejson',
     packages=['morejson'],
     # packages=find_packages(),
-    install_require=[],
-    extras_require={
-        'test': ['nose', 'coverage', 'nose-timer']
-    },
+    install_requires=[],
+    setup_requires=['nose', 'coverage', 'nose-timer'],
     test_suite='nose.collector',
     platforms=['any'],
     classifiers=[
