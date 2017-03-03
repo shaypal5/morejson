@@ -36,13 +36,6 @@ setup(
         # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: POSIX',
-        'Operating System :: POSIX :: Linux',
-        'Operating System :: POSIX :: BSD',
-        'Operating System :: POSIX :: BSD :: FreeBSD',
-        'Operating System :: POSIX :: SunOS/Solaris',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
