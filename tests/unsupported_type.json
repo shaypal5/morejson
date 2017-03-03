@@ -1,0 +1,9 @@
+{
+  "name": "Kevin",
+  "age": 21,
+  "pet": {
+    "name": "Trippy Jack",
+    "age": 20762,
+    "__type__": "hyperdimensional.hamster"
+  }
+}

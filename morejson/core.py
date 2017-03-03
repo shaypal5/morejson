@@ -181,13 +181,16 @@ except AttributeError:
 
 
 def _morejson_object_hook(dict_obj):
-    if _MOREJSON_TYPE not in dict_obj:
-        return dict_obj
-    objtype = dict_obj.pop(_MOREJSON_TYPE)
     try:
-        return _DECODER_MAP[objtype](dict_obj)
-    except BaseException:
-        dict_obj[_MOREJSON_TYPE] = objtype
+        if _MOREJSON_TYPE not in dict_obj:
+            return dict_obj
+        objtype = dict_obj.pop(_MOREJSON_TYPE)
+        try:
+            return _DECODER_MAP[objtype](dict_obj)
+        except BaseException:
+            dict_obj[_MOREJSON_TYPE] = objtype
+            return dict_obj
+    except TypeError:
         return dict_obj
 
 
@@ -198,36 +201,36 @@ def _get_wrapped_morejson_hook(custom_hook):
     return _wrapped_morejson_hook
 
 
-def _morejson_defualt_encoder(obj): # pylint: disable=E0202
+def _morejson_default_encoder(obj): # pylint: disable=E0202
     try:
         return _ENCODER_MAP[type(obj)](obj)
     except KeyError:
         raise TypeError("Type {} is not JSON encodable.".format(type(obj)))
 
 
-def _get_wrapped_morejson_defualt_encoder(custom_default):
-    def _wrapped_morejson_defualt_encoder(obj):
+def _get_wrapped_morejson_default_encoder(custom_default):
+    def _wrapped_morejson_default_encoder(obj):
         try:
             return custom_default(obj)
         except TypeError:
-            return _morejson_defualt_encoder(obj)
-    return _wrapped_morejson_defualt_encoder
+            return _morejson_default_encoder(obj)
+    return _wrapped_morejson_default_encoder
 
 
 # === wrapping the json api ===
 
 def dump(obj, fp, **kwargs): # pylint: disable=C0103, C0111
-    default_to_put = _morejson_defualt_encoder
+    default_to_put = _morejson_default_encoder
     if 'default' in kwargs:
-        default_to_put = _get_wrapped_morejson_defualt_encoder(
+        default_to_put = _get_wrapped_morejson_default_encoder(
             kwargs.pop('default'))
     json.dump(obj, fp, default=default_to_put, **kwargs)
 
 
 def dumps(obj, **kwargs): # pylint: disable=C0103, C0111
-    default_to_put = _morejson_defualt_encoder
+    default_to_put = _morejson_default_encoder
     if 'default' in kwargs:
-        default_to_put = _get_wrapped_morejson_defualt_encoder(
+        default_to_put = _get_wrapped_morejson_default_encoder(
             kwargs.pop('default'))
     return json.dumps(obj, default=default_to_put, **kwargs)
 

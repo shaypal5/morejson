@@ -1,0 +1,7 @@
+{
+    "my_monkey": {
+        "_custom_type_": "monkey",
+        "name": "Jason",
+        "bananas": 2
+    }
+}

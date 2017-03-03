@@ -124,6 +124,31 @@ class TestDump(unittest.TestCase):
         finally:
             _dismantle_test_dirs()
 
+    def test_dumps_datetime_with_fold(self):
+        """Testing dump and load of datetime types."""
+        if sys.version_info.major < 3 or sys.version_info.minor < 6:
+            return
+        try:
+            dt = datetime.datetime(
+                year=2012, month=10, day=10, fold=0.3)
+            _build_test_dirs()
+            dicti = {
+                'datetime': dt,
+                'array': [1, 2, 3],
+                'string': 'trololo',
+                'int': 1,
+                'float': 4.32,
+                'true': True,
+                'false': False,
+                'null': None
+            }
+            with open(_TEST_FILE, 'w+') as fileobj:
+                morejson.dump(dicti, fileobj)
+            with open(_TEST_FILE, 'r') as fileobj:
+                self.assertEqual(dicti, morejson.load(fileobj))
+        finally:
+            _dismantle_test_dirs()
+
     def test_dumps_timedelta(self):
         """Testing dump and load of timedelta types."""
         try:
@@ -230,5 +255,82 @@ class TestDump(unittest.TestCase):
                 morejson.dump(dicti, fileobj)
             with open(_TEST_FILE, 'r') as fileobj:
                 self.assertEqual(dicti, morejson.load(fileobj))
+        finally:
+            _dismantle_test_dirs()
+
+    def test_load_bad_datetime_arg(self):
+        """Testing dumps of unsupported types."""
+        expected = {
+            "release_day": 2,
+            "closing_date": {
+                "bad_arg": 12,
+                "month": 10,
+                "year": 2013,
+                "day": 18,
+                "__type__": "datetime.date"
+            }
+        }
+        with open('tests/bad_datetime_arg.json', 'r') as json_file:
+            self.assertEqual(expected, morejson.load(json_file))
+
+    def test_load_unsupported_type(self):
+        """Testing dump of unsupported types."""
+        expected = {
+            "name": "Kevin",
+            "age": 21,
+            "pet": {
+                "name": "Trippy Jack",
+                "age": 20762,
+                "__type__": "hyperdimensional.hamster"
+            }
+        }
+        with open('tests/unsupported_type.json', 'r') as json_file:
+            self.assertEqual(expected, morejson.load(json_file))
+
+    class _Monkey(object):
+        def __init__(self, name, bananas):
+            self.name = name
+            self.bananas = bananas
+        def __eq__(self, other):
+            if isinstance(other, self.__class__):
+                return (self.name == other.name) and (
+                    self.bananas == other.bananas)
+            else:
+                return False
+
+    @staticmethod
+    def _monkey_default_encoder(obj): # pylint: disable=E0202
+        if isinstance(obj, TestDump._Monkey):
+            return {
+                "_custom_type_": "monkey",
+                "name": obj.name,
+                "bananas": obj.bananas
+            }
+        else:
+            raise TypeError("Type {} is not JSON encodable.".format(type(obj)))
+
+    @staticmethod
+    def _monkey_object_hook(dict_obj):
+        if "_custom_type_" not in dict_obj:
+            return dict_obj
+        if dict_obj["_custom_type_"] == "monkey":
+            return TestDump._Monkey(
+                dict_obj['name'], dict_obj['bananas'])
+        else:
+            return dict_obj
+
+    def test_dump_monkey(self):
+        """Testing dumps of monkey types."""
+        try:
+            _build_test_dirs()
+            johnny = TestDump._Monkey("Johnny", 54)
+            dicti = {"my_pet": johnny}
+            with open(_TEST_FILE, 'w+') as fileobj:
+                morejson.dump(
+                    dicti, fileobj, default=TestDump._monkey_default_encoder)
+            with open(_TEST_FILE, 'r') as fileobj:
+                res = morejson.load(
+                    fileobj, object_hook=TestDump._monkey_object_hook)
+                self.assertEqual(dicti, res)
         finally:
             _dismantle_test_dirs()

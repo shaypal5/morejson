@@ -1,0 +1,10 @@
+{
+  "release_day": 2,
+  "closing_date": {
+    "bad_arg": 12,
+    "month": 10,
+    "year": 2013,
+    "day": 18,
+    "__type__": "datetime.date"
+  }
+}

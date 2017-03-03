@@ -147,3 +147,63 @@ class TestDumps(unittest.TestCase):
         }
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
+    def test_dumps_unsupported(self):
+        """Testing dumps of unsupported types."""
+        dicti = {
+            'lambda': lambda a: a+1
+        }
+        with self.assertRaises(TypeError):
+            morejson.dumps(dicti)
+
+    def test_loads_bad_datetime_arg(self):
+        """Testing dumps of unsupported types."""
+        dicti = {
+            "release_day": 2,
+            "closing_date": {
+                "month": 10,
+                "year": 2013,
+                "day": 18,
+                "__type__": "datetime.date"
+            }
+        }
+        morejson.loads(morejson.dumps(dicti))
+
+    class _Monkey(object):
+        def __init__(self, name, bananas):
+            self.name = name
+            self.bananas = bananas
+        def __eq__(self, other):
+            if isinstance(other, self.__class__):
+                return (self.name == other.name) and (
+                    self.bananas == other.bananas)
+            else:
+                return False
+
+    @staticmethod
+    def _monkey_default_encoder(obj): # pylint: disable=E0202
+        if isinstance(obj, TestDumps._Monkey):
+            return {
+                "_custom_type_": "monkey",
+                "name": obj.name,
+                "bananas": obj.bananas
+            }
+        else:
+            raise TypeError("Type {} is not JSON encodable.".format(type(obj)))
+
+    @staticmethod
+    def _monkey_object_hook(dict_obj):
+        if "_custom_type_" not in dict_obj:
+            return dict_obj
+        if dict_obj["_custom_type_"] == "monkey":
+            return TestDumps._Monkey(
+                dict_obj['name'], dict_obj['bananas'])
+        else:
+            return dict_obj
+
+    def test_dump_monkey(self):
+        """Testing dumps of monkey types."""
+        johnny = TestDumps._Monkey("Johnny", 54)
+        dicti = {"my_pet": johnny}
+        self.assertEqual(dicti, morejson.loads(
+            morejson.dumps(dicti, default=TestDumps._monkey_default_encoder),
+            object_hook=TestDumps._monkey_object_hook))
