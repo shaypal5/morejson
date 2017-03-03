@@ -13,12 +13,10 @@ notifications:
 before_install:
   # coverage submission packages
   - pip install codecov
-#   - pip install --user codecov
 install:
 - pip install .
-script: nosetest -with-coverage --with-timer --cover-package=morejson  -d -v morejson/
-# --ignore-files="tests_perf\.py"
-    - coveralls
+script: nosetest -with-coverage --with-timer --cover-package=morejson -d
+# --ignore-files="tests_perf\.py" - coveralls
 # submit coverage
 after_success:
   # - coveralls
