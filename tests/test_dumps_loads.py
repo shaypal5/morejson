@@ -147,6 +147,9 @@ class TestDumps(unittest.TestCase):
         }
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
+
+    # testing problmem handling and corner cases
+
     def test_dumps_unsupported(self):
         """Testing dumps of unsupported types."""
         dicti = {
