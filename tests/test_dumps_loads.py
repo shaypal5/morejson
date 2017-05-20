@@ -104,6 +104,37 @@ class TestDumps(unittest.TestCase):
         }
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
+    def test_dumps_datetime_with_zone(self):
+        """Testing dumps and loads of timezone-aware datetime types, as well as standalone 
+        timezone objects """
+
+        import pytz
+        import tzlocal
+
+        local_tz = tzlocal.get_localzone()
+        custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
+        pytz_est = pytz.timezone("US/Eastern")
+
+        original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
+        morejson.CONFIG["allow_pickle"] = True
+
+        dicti = {
+            'datetime-no-tz': datetime.datetime.now(),
+            'datetime-with-utc': datetime.datetime.now(tz=datetime.timezone.utc),
+            'datetime-with-est': datetime.datetime.now(tz=pytz_est),
+            'datetime-with-tzlocal': datetime.datetime.now(tz=local_tz),
+            'datetime-with-tz-plain': datetime.datetime.now(tz=custom_tz),
+            'eastern-tzone': pytz_est,
+            'custom-tzone': custom_tz,
+            'array': [1, 2, 3, pytz_est],
+            'string': 'trololo',
+            'null': None
+        }
+        out_str = morejson.dumps(dicti)
+        actual_obj = morejson.loads(out_str)
+        self.assertEqual(dicti, actual_obj)
+        morejson.CONFIG["allow_pickle"] = original_allow_pickle
+
     def test_dumps_set(self):
         """Testing dumps and loads of set types."""
         dicti = {

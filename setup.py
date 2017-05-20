@@ -28,7 +28,7 @@ setup(
     packages=['morejson'],
     # packages=find_packages(),
     install_requires=[],
-    setup_requires=['nose', 'coverage', 'nose-timer'],
+    setup_requires=['nose', 'coverage', 'nose-timer', 'pytz', 'tzlocal'],
     test_suite='nose.collector',
     platforms=['any'],
     classifiers=[
