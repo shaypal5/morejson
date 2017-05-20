@@ -98,3 +98,6 @@ ENV/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# PyCharm / IDEA project folder
+.idea
