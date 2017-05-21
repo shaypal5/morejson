@@ -111,8 +111,31 @@ class TestDumps(unittest.TestCase):
         import pytz
         import tzlocal
 
+        if hasattr(datetime, "timezone"):
+            custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
+            UTC = datetime.timezone.utc
+        elif hasattr(datetime, "tzinfo"):
+            class FixedOffset(datetime.tzinfo):
+                """Fixed offset in minutes east from UTC."""
+
+                def __init__(self, offset, name):
+                    self.__offset = datetime.timedelta(minutes=offset)
+                    self.__name = name
+
+                def utcoffset(self, dt):
+                    return self.__offset
+
+                def tzname(self, dt):
+                    return self.__name
+
+                def dst(self, dt):
+                    return datetime.timedelta(0)
+            UTC = FixedOffset(0, "UTC")
+            custom_tz = FixedOffset(-510, "-08:30")
+        else:
+            return
+
         local_tz = tzlocal.get_localzone()
-        custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
         pytz_est = pytz.timezone("US/Eastern")
 
         original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
@@ -120,13 +143,13 @@ class TestDumps(unittest.TestCase):
 
         dicti = {
             'datetime-no-tz': datetime.datetime.now(),
-            'datetime-with-utc': datetime.datetime.now(tz=datetime.timezone.utc),
+            'datetime-with-utc': datetime.datetime.now(tz=UTC),
             'datetime-with-est': datetime.datetime.now(tz=pytz_est),
             'datetime-with-tzlocal': datetime.datetime.now(tz=local_tz),
             'datetime-with-tz-plain': datetime.datetime.now(tz=custom_tz),
             'eastern-tzone': pytz_est,
             'custom-tzone': custom_tz,
-            'array': [1, 2, 3, pytz_est],
+            'array': [1, 2, 3, UTC, pytz_est, local_tz, custom_tz],
             'string': 'trololo',
             'null': None
         }
