@@ -138,7 +138,7 @@ def _timezone_encoder(obj, dt=None):
 def _timezone_decoder(dict_obj):
     pickle_str = dict_obj.pop("__pickle__", None)
     if allow_pickle() and pickle_str:
-        return pickle.loads(binascii.a2b_base64(pickle_str))
+        return pickle.loads(binascii.a2b_base64(pickle_str.encode("ascii")))
     return datetime.timezone(**dict_obj)
 
 
