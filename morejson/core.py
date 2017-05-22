@@ -127,7 +127,6 @@ def _timezone_encoder(obj, dt=None):
         _MOREJSON_TYPE: _EncodedTypes.TIMEZONE,
         'offset': obj.utcoffset(dt),
         'name': obj.tzname(dt),
-
     }
     if allow_pickle():
         # Hacky, but this allows us to restore the exact class that was used
@@ -190,6 +189,8 @@ class _EncodedTypes(object):
     TIMEDELTA = 'datetime.timedelta'
     TIMEZONE = 'datetime.timezone'
     PYTZ_TIMEZONE = 'pytz.tzinfo.BaseTzInfo'
+    PYTZ_FIXEDOFFSET = 'pytz.FixedOffset'
+    PYTZ_UTC = 'pytz.UTC'
     SET = 'set'
     FROZENSET = 'frozenset'
     COMPLEX = 'complex'
@@ -228,6 +229,17 @@ if pytz is not None:
     # necessary a different decoder could be used if they need to be split off.
     _ENCODER_MAP[pytz.tzinfo.BaseTzInfo] = _timezone_encoder
     _DECODER_MAP[_EncodedTypes.PYTZ_TIMEZONE] = _timezone_decoder
+
+    # Pytz's UTC and FixedOffset class don't have the same base class as the others.
+    _ENCODER_MAP[pytz.UTC.__class__] = _timezone_encoder
+    _DECODER_MAP[_EncodedTypes.PYTZ_UTC] = _timezone_decoder
+
+    _ENCODER_MAP[pytz._FixedOffset] = _timezone_encoder
+    _DECODER_MAP[_EncodedTypes.PYTZ_FIXEDOFFSET] = _timezone_decoder
+
+    # With Python 2.7 and pytz installed, we can decode "_EncodedTypes.TIMEZONE" with above types, but can't
+    # encode `datetime.timezone` itself since it doesn't exist.
+    _DECODER_MAP[_EncodedTypes.TIMEZONE] = _timezone_decoder
 
 
 def _morejson_object_hook(dict_obj):

@@ -108,35 +108,57 @@ class TestDumps(unittest.TestCase):
         """Testing dumps and loads of timezone-aware datetime types, as well as standalone 
         timezone objects """
 
-        import pytz
-        import tzlocal
-
-        if hasattr(datetime, "timezone"):
-            custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
-            UTC = datetime.timezone.utc
-        elif hasattr(datetime, "tzinfo"):
-            class FixedOffset(datetime.tzinfo):
-                """Fixed offset in minutes east from UTC."""
-
-                def __init__(self, offset, name):
-                    self.__offset = datetime.timedelta(minutes=offset)
-                    self.__name = name
-
-                def utcoffset(self, dt):
-                    return self.__offset
-
-                def tzname(self, dt):
-                    return self.__name
-
-                def dst(self, dt):
-                    return datetime.timedelta(0)
-            UTC = FixedOffset(0, "UTC")
-            custom_tz = FixedOffset(-510, "-08:30")
-        else:
-            return
+        try:
+            import pytz
+            import tzlocal
+        except ImportError:
+            # These packages aren't available - can't test
+            raise unittest.SkipTest(
+                "pytz or tzlocal not available in this test run; skipping zone-aware DT tests.")
 
         local_tz = tzlocal.get_localzone()
         pytz_est = pytz.timezone("US/Eastern")
+        pytz_pst = pytz.timezone("US/Pacific")
+        pytz_utc = pytz.timezone("UTC")
+        pytz_fixed = pytz.FixedOffset(-120)
+
+        original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
+        morejson.CONFIG["allow_pickle"] = True
+
+        dicti = {
+            'datetime-no-tz': datetime.datetime.now(),
+            'datetime-with-utc': datetime.datetime.now(tz=pytz_utc),
+            'datetime-with-est': datetime.datetime.now(tz=pytz_est),
+            'datetime-with-tzlocal': datetime.datetime.now(tz=local_tz),
+            'datetime-with-pst': datetime.datetime.now(tz=pytz_pst),
+            'datetime-with-fixedoffset': datetime.datetime.now(tz=pytz_fixed),
+            'eastern-tzone': pytz_est,
+            'pacific-tzone': pytz_pst,
+            'array': [1, 2, 3, pytz_utc, pytz_est, local_tz, pytz_pst, pytz_fixed],
+            'string': 'trololo',
+            'null': None
+        }
+        out_str = morejson.dumps(dicti)
+        actual_obj = morejson.loads(out_str)
+        self.assertEqual(dicti, actual_obj)
+        morejson.CONFIG["allow_pickle"] = original_allow_pickle
+
+    @unittest.skipIf(sys.version_info < (3, 0), "not supported in Python2")
+    def test_dumps_datetime_with_custom_zones(self):
+        """
+        Testing dumps and loads of timezone-aware datetime types, with custom defined (fixed offset from UTC) zones.
+        This uses the `datetime.timezone` class which is not available on Python 2.7, so we skip it there.
+        """
+        try:
+            import pytz
+            import tzlocal
+        except ImportError:
+            # These packages aren't available - can't test
+            raise unittest.SkipTest(
+                "pytz or tzlocal not available in this test run; skipping zone-aware DT tests.")
+
+        custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
+        UTC = datetime.timezone.utc
 
         original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
         morejson.CONFIG["allow_pickle"] = True
@@ -144,12 +166,9 @@ class TestDumps(unittest.TestCase):
         dicti = {
             'datetime-no-tz': datetime.datetime.now(),
             'datetime-with-utc': datetime.datetime.now(tz=UTC),
-            'datetime-with-est': datetime.datetime.now(tz=pytz_est),
-            'datetime-with-tzlocal': datetime.datetime.now(tz=local_tz),
             'datetime-with-tz-plain': datetime.datetime.now(tz=custom_tz),
-            'eastern-tzone': pytz_est,
             'custom-tzone': custom_tz,
-            'array': [1, 2, 3, UTC, pytz_est, local_tz, custom_tz],
+            'array': [1, 2, 3, UTC, custom_tz],
             'string': 'trololo',
             'null': None
         }
