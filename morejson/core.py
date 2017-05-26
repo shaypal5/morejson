@@ -24,7 +24,7 @@ except ImportError:
 
 try:
     import pytz
-except ImportError:
+except ImportError:  # pragma: no cover
     # This installation doesn't have pytz, so we can ignore it
     pytz = None
 
@@ -240,6 +240,8 @@ if pytz is not None:
     # With Python 2.7 and pytz installed, we can decode "_EncodedTypes.TIMEZONE" with above types, but can't
     # encode `datetime.timezone` itself since it doesn't exist.
     _DECODER_MAP[_EncodedTypes.TIMEZONE] = _timezone_decoder
+else:  # pragma: no cover
+    pass
 
 
 def _morejson_object_hook(dict_obj):

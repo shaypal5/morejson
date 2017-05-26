@@ -149,13 +149,6 @@ class TestDumps(unittest.TestCase):
         Testing dumps and loads of timezone-aware datetime types, with custom defined (fixed offset from UTC) zones.
         This uses the `datetime.timezone` class which is not available on Python 2.7, so we skip it there.
         """
-        try:
-            import pytz
-            import tzlocal
-        except ImportError:
-            # These packages aren't available - can't test
-            raise unittest.SkipTest(
-                "pytz or tzlocal not available in this test run; skipping zone-aware DT tests.")
 
         custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
         UTC = datetime.timezone.utc
