@@ -222,7 +222,7 @@ except AttributeError:
     pass  # we're on Python 2.x
 
 
-if pytz is not None:
+if pytz is not None:  # pragma: no branch
     # pytz uses a different class for each zone, so we need the map key to be the base class
     # BaseTzInfo. Currently, pytz uses the same encoder/decoder as for 'datetime.timezone' as
     # well as the same __type__ - so you won't see PYTZ_TIMEZONE in the actual JSON. However if
@@ -240,8 +240,6 @@ if pytz is not None:
     # With Python 2.7 and pytz installed, we can decode "_EncodedTypes.TIMEZONE" with above types, but can't
     # encode `datetime.timezone` itself since it doesn't exist.
     _DECODER_MAP[_EncodedTypes.TIMEZONE] = _timezone_decoder
-else:  # pragma: no cover
-    pass
 
 
 def _morejson_object_hook(dict_obj):
