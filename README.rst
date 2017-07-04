@@ -35,6 +35,7 @@ Use
 
 You can use any argument of these methods, including ``default``, ``cls`` and ``object_hook``; ``morejson`` will wrap around any kind of custom behaviour you provide, giving it priority over ``morejson``'s encoding or decoding, and allowing you to use it with any custom JSON encoding/decoding code you have.
 
+
 Supported Types
 ===============
 
@@ -53,6 +54,48 @@ datetime module types
 * datetime
 * timedelta
 * timezone
+
+
+Contributing
+============
+
+Package author and current maintainer is Shay Palachy (shay.palachy@gmail.com); You are more than welcome to approach him for help. Contributions are very welcomed.
+
+Installing for development
+--------------------------
+
+Clone:
+
+.. code-block:: bash
+
+  git clone git@github.com:shaypal5/morejson.git
+
+
+Install in development mode with test dependencies:
+
+.. code-block:: bash
+
+  cd morejson
+  pip install -e ".[test]"
+
+
+Running the tests
+-----------------
+
+To run the tests, use:
+
+.. code-block:: bash
+
+  nosetests --cover-erase --with-coverage --cover-package=morejson -d
+
+
+Adding documentation
+--------------------
+
+This project is documented using the `numpy docstring conventions`_, which were chosen as they are perhaps the most widely-spread conventions that are both supported by common tools such as Sphinx and result in human-readable docstrings (in my personal opinion, of course). When documenting code you add to this project, please follow `these conventions`_.
+
+.. _`numpy docstring conventions`: https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
+.. _`these conventions`: https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
 
 
 Credits
