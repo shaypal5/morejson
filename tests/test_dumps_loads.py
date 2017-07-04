@@ -104,6 +104,72 @@ class TestDumps(unittest.TestCase):
         }
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
+    def test_dumps_datetime_with_zone(self):
+        """Testing dumps and loads of timezone-aware datetime types, as well as standalone 
+        timezone objects """
+
+        try:
+            import pytz
+            import tzlocal
+        except ImportError:
+            # These packages aren't available - can't test
+            raise unittest.SkipTest(
+                "pytz or tzlocal not available in this test run; skipping zone-aware DT tests.")
+
+        local_tz = tzlocal.get_localzone()
+        pytz_est = pytz.timezone("US/Eastern")
+        pytz_pst = pytz.timezone("US/Pacific")
+        pytz_utc = pytz.timezone("UTC")
+        pytz_fixed = pytz.FixedOffset(-120)
+
+        original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
+        morejson.CONFIG["allow_pickle"] = True
+
+        dicti = {
+            'datetime-no-tz': datetime.datetime.now(),
+            'datetime-with-utc': datetime.datetime.now(tz=pytz_utc),
+            'datetime-with-est': datetime.datetime.now(tz=pytz_est),
+            'datetime-with-tzlocal': datetime.datetime.now(tz=local_tz),
+            'datetime-with-pst': datetime.datetime.now(tz=pytz_pst),
+            'datetime-with-fixedoffset': datetime.datetime.now(tz=pytz_fixed),
+            'eastern-tzone': pytz_est,
+            'pacific-tzone': pytz_pst,
+            'array': [1, 2, 3, pytz_utc, pytz_est, local_tz, pytz_pst, pytz_fixed],
+            'string': 'trololo',
+            'null': None
+        }
+        out_str = morejson.dumps(dicti)
+        actual_obj = morejson.loads(out_str)
+        self.assertEqual(dicti, actual_obj)
+        morejson.CONFIG["allow_pickle"] = original_allow_pickle
+
+    @unittest.skipIf(sys.version_info < (3, 0), "not supported in Python2")
+    def test_dumps_datetime_with_custom_zones(self):
+        """
+        Testing dumps and loads of timezone-aware datetime types, with custom defined (fixed offset from UTC) zones.
+        This uses the `datetime.timezone` class which is not available on Python 2.7, so we skip it there.
+        """
+
+        custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
+        UTC = datetime.timezone.utc
+
+        original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
+        morejson.CONFIG["allow_pickle"] = True
+
+        dicti = {
+            'datetime-no-tz': datetime.datetime.now(),
+            'datetime-with-utc': datetime.datetime.now(tz=UTC),
+            'datetime-with-tz-plain': datetime.datetime.now(tz=custom_tz),
+            'custom-tzone': custom_tz,
+            'array': [1, 2, 3, UTC, custom_tz],
+            'string': 'trololo',
+            'null': None
+        }
+        out_str = morejson.dumps(dicti)
+        actual_obj = morejson.loads(out_str)
+        self.assertEqual(dicti, actual_obj)
+        morejson.CONFIG["allow_pickle"] = original_allow_pickle
+
     def test_dumps_set(self):
         """Testing dumps and loads of set types."""
         dicti = {
