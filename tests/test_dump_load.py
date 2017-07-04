@@ -130,8 +130,7 @@ class TestDump(unittest.TestCase):
             return
         try:
             _build_test_dirs()
-            dt = datetime.datetime(
-                year=2012, month=10, day=10, fold=1)
+            dt = datetime.datetime(year=2012, month=10, day=10, fold=1)
             dicti = {
                 'datetime': dt,
                 'array': [1, 2, 3],

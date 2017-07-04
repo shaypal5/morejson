@@ -105,8 +105,8 @@ class TestDumps(unittest.TestCase):
         self.assertEqual(dicti, morejson.loads(morejson.dumps(dicti)))
 
     def test_dumps_datetime_with_zone(self):
-        """Testing dumps and loads of timezone-aware datetime types, as well as standalone 
-        timezone objects """
+        """Testing dumps and loads of timezone-aware datetime types, as well
+        as standalone  timezone objects """
 
         try:
             import pytz
@@ -114,7 +114,8 @@ class TestDumps(unittest.TestCase):
         except ImportError:
             # These packages aren't available - can't test
             raise unittest.SkipTest(
-                "pytz or tzlocal not available in this test run; skipping zone-aware DT tests.")
+                "pytz or tzlocal not available in this test run; skipping"
+                "zone-aware DT tests.")
 
         local_tz = tzlocal.get_localzone()
         pytz_est = pytz.timezone("US/Eastern")
@@ -134,7 +135,8 @@ class TestDumps(unittest.TestCase):
             'datetime-with-fixedoffset': datetime.datetime.now(tz=pytz_fixed),
             'eastern-tzone': pytz_est,
             'pacific-tzone': pytz_pst,
-            'array': [1, 2, 3, pytz_utc, pytz_est, local_tz, pytz_pst, pytz_fixed],
+            'array': [
+                1, 2, 3, pytz_utc, pytz_est, local_tz, pytz_pst, pytz_fixed],
             'string': 'trololo',
             'null': None
         }
@@ -145,23 +147,24 @@ class TestDumps(unittest.TestCase):
 
     @unittest.skipIf(sys.version_info < (3, 0), "not supported in Python2")
     def test_dumps_datetime_with_custom_zones(self):
-        """
-        Testing dumps and loads of timezone-aware datetime types, with custom defined (fixed offset from UTC) zones.
-        This uses the `datetime.timezone` class which is not available on Python 2.7, so we skip it there.
-        """
+        """ Testing dumps and loads of timezone-aware datetime types, with
+        custom defined (fixed offset from UTC) zones. This uses the
+        `datetime.timezone` class which is not available on Python 2.7, so we
+        skip it there."""
 
-        custom_tz = datetime.timezone(datetime.timedelta(hours=-8, minutes=-30))
-        UTC = datetime.timezone.utc
+        custom_tz = datetime.timezone(
+            datetime.timedelta(hours=-8, minutes=-30))
+        utz_tz = datetime.timezone.utc
 
         original_allow_pickle = morejson.CONFIG.get("allow_pickle", False)
         morejson.CONFIG["allow_pickle"] = True
 
         dicti = {
             'datetime-no-tz': datetime.datetime.now(),
-            'datetime-with-utc': datetime.datetime.now(tz=UTC),
+            'datetime-with-utc': datetime.datetime.now(tz=utz_tz),
             'datetime-with-tz-plain': datetime.datetime.now(tz=custom_tz),
             'custom-tzone': custom_tz,
-            'array': [1, 2, 3, UTC, custom_tz],
+            'array': [1, 2, 3, utz_tz, custom_tz],
             'string': 'trololo',
             'null': None
         }
